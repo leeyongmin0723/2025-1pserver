@@ -1,6 +1,7 @@
 import joblib
 import pandas as pd
 import numpy as np
+
 from pydantic import BaseModel
 from sklearn.ensemble import RandomForestClassifier
 
@@ -9,6 +10,7 @@ class IrisSpecies(BaseModel):
     sepal_width: float
     petal_length: float
     petal_width: float
+
 
 class IrisMachineLearning:
     def __init__(self):
@@ -31,7 +33,13 @@ class IrisMachineLearning:
         return model_rfc
 
     def predict_species(self, sepal_length, sepal_width, petal_length, petal_width):
-        X_new = np.array([[sepal_length, sepal_width, petal_length, petal_width]])
+
+        # X_new = np.array([[sepal_length, sepal_width, petal_length, petal_width]])
+
+        X_new = pd.DataFrame([[sepal_length, sepal_width, petal_length, petal_width]],
+                             columns=['sepal_length', 'sepal_width', 'petal_length', 'petal_width'])
+
         prediction = self.model_rfc.predict(X_new)
-        print(prediction)
-        return prediction[0]
+        probability = self.model_rfc.predict_proba(X_new).max()
+
+        return prediction[0], probability
