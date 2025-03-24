@@ -22,3 +22,6 @@
 
 ## 동작화면 예시 ##
 <img src="iriscapture.png">
+
+## 파이차트 예시 ##
+<img src="piechart.png">
